@@ -24,3 +24,35 @@ void expand_environment(tokenlist *tokens)
         }
     }
 }
+
+void expand_tilde(tokenlist *tokens)
+{
+    const char *home = getenv("HOME");
+
+    if (home == NULL)
+        home = "";
+
+    for (size_t i = 0; i < tokens->size; i++) {
+        char *item = tokens->items[i];
+
+        if (strcmp(item, "~") == 0 ||
+            (item[0] == '~' && item[1] == '/')) {
+
+            const char *suffix = item + 1;
+            size_t new_size = strlen(home) + strlen(suffix) + 1;
+
+            char *expanded = malloc(new_size);
+
+            if (expanded == NULL) {
+                perror("malloc");
+                exit(EXIT_FAILURE);
+            }
+
+            strcpy(expanded, home);
+            strcat(expanded, suffix);
+
+            free(tokens->items[i]);
+            tokens->items[i] = expanded;
+        }
+    }
+}
