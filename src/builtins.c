@@ -1,6 +1,9 @@
 #include "builtins.h"
+#include "history.h"
+#include "jobs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 int builtin_cd(tokenlist *tokens)
@@ -29,4 +32,39 @@ int builtin_cd(tokenlist *tokens)
     }
 
     return 0;
+}
+
+void builtin_exit(void)
+{
+    wait_for_all_jobs();
+    print_history();
+    free_history();
+
+    exit(0);
+}
+
+void builtin_jobs(void)
+{
+    print_jobs();
+}
+
+int is_builtin(const char *command)
+{
+    return command != NULL &&
+           (strcmp(command, "cd") == 0 ||
+            strcmp(command, "exit") == 0 ||
+            strcmp(command, "jobs") == 0);
+}
+
+void run_builtin(tokenlist *tokens)
+{
+    const char *cmd = tokens->items[0];
+
+    if (strcmp(cmd, "cd") == 0) {
+        builtin_cd(tokens);
+    } else if (strcmp(cmd, "exit") == 0) {
+        builtin_exit();
+    } else if (strcmp(cmd, "jobs") == 0) {
+        builtin_jobs();
+    }
 }
