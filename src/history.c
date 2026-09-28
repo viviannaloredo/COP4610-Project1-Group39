@@ -41,9 +41,14 @@ void print_history(void)
         return;
     }
 
-    printf("Last (%zu) valid commands:\n", history_count);
+    if (history_count < HISTORY_SIZE) {
+        printf("%s\n", history[history_count - 1]);
+        return;
+    }
 
-    for (size_t i = 0; i < history_count; i++)
+    printf("Last (3) valid commands:\n");
+
+    for (size_t i = 0; i < HISTORY_SIZE; i++)
         printf("[%zu]: %s\n", i + 1, history[i]);
 }
 
