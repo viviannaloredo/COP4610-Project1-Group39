@@ -31,7 +31,7 @@ tokenlist **split_pipeline(tokenlist *tokens, size_t *num_stages)
     }
 
     size_t stage_idx = 0;
-    int prev_was_pipe = 1; 
+    int prev_was_pipe = 1;
 
     for (size_t i = 0; i < tokens->size; i++) {
         if (strcmp(tokens->items[i], "|") == 0) {
