@@ -1,32 +1,32 @@
 SRC := src
 OBJ := obj
 BIN := bin
-EXECUTABLE:= shell
+EXECUTABLE := shell
 
 SRCS := $(wildcard $(SRC)/*.c)
 OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(SRCS))
-INCS := -Iinclude/
-DIRS := $(OBJ)/ $(BIN)/
-EXEC := $(BIN)/$(EXECUTABLE)
 
 CC := gcc
-CFLAGS := -g -Wall -std=c99 $(INCS)
-LDFLAGS :=
+INCLUDE := -Iinclude
 
-all: $(EXEC)
+all: $(BIN)/$(EXECUTABLE)
 
-$(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(EXEC)
+$(BIN)/$(EXECUTABLE): $(OBJS) | $(BIN)
+	$(CC) $(OBJS) -o $@
 
-$(OBJ)/%.o: $(SRC)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ)/%.o: $(SRC)/%.c | $(OBJ)
+	$(CC) $(INCLUDE) -c $< -o $@
 
-run: $(EXEC)
-	$(EXEC)
+$(OBJ):
+	mkdir -p $(OBJ)
+
+$(BIN):
+	mkdir -p $(BIN)
+
+run: $(BIN)/$(EXECUTABLE)
+	./$(BIN)/$(EXECUTABLE)
 
 clean:
-	rm -f $(OBJ)/*.o $(EXEC)
+	rm -f $(OBJ)/*.o $(BIN)/$(EXECUTABLE)
 
-$(shell mkdir -p $(DIRS))
-
-.PHONY: run clean all
+.PHONY: all run clean

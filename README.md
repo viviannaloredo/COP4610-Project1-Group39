@@ -1,137 +1,427 @@
 # Shell
 
-[Description]
+## Description
+
+This project implements a Unix-style command shell in C for COP4610 Operating Systems. The shell reads commands entered by the user and supports features such as environment variable and tilde expansion, PATH searching, external command execution, I/O redirection, pipelines, background processes, internal commands, job tracking, and command history.
+
+The project was divided between the three group members so that each person worked on multiple parts of the shell. Several related parts were assigned to two people so that they could be developed and checked together. After the separate portions were completed, the project was integrated and tested as a complete shell.
+
+## Group Information
+
+- **Group Number:** 39
+- **Course:** COP4610 - Operating Systems
+- **Project:** Project 1
 
 ## Group Members
-- **John Doe**: jd19@fsu.edu
-- **Jane Smith**: js19@fsu.edu
-- **Alex Brown**: ab19@fsu.edu
-## Division of Labor
 
-### Part 1: Prompt
-- **Responsibilities**: [Description]
-- **Assigned to**: John Doe
+- Damian Abrego
+- Vivianna Loredo
+- Xavier Rosario
 
-### Part 2: Environment Variables
-- **Responsibilities**: [Description]
-- **Assigned to**: Jane Smith
+---
 
-### Part 3: Tilde Expansion
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown
+# Division of Labor
 
-### Part 4: $PATH Search
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown, Jane Smith
+## Part 1: Prompt
 
-### Part 5: External Command Execution
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown, Jane Smith
+**Responsibilities:**
+Implement the shell prompt and display the current user, machine, and working directory in the required format.
 
-### Part 6: I/O Redirection
-- **Responsibilities**: [Description]
-- **Assigned to**: Jane Smith
+**Assigned to:**
+Vivianna Loredo and Xavier Rosario
 
-### Part 7: Piping
-- **Responsibilities**: [Description]
-- **Assigned to**: John Doe
+## Part 2: Environment Variables
 
-### Part 8: Background Processing
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown, John Doe
+**Responsibilities:**
+Handle environment variable expansion for tokens beginning with `$` so commands can use values stored in the user's environment.
 
-### Part 9: Internal Command Execution
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown
+**Assigned to:**
+Vivianna Loredo and Damian Abrego
 
-### Part 10: External Timeout Executable
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown, Jane Smith
+## Part 3: Tilde Expansion
 
-### Extra Credit
-- **Responsibilities**: [Description]
-- **Assigned to**: Alex Brown
+**Responsibilities:**
+Implement tilde expansion so `~` and paths beginning with `~/` are expanded using the user's home directory.
 
-## File Listing
-```
-shell/
+**Assigned to:**
+Vivianna Loredo and Xavier Rosario
+
+## Part 4: PATH Search
+
+**Responsibilities:**
+Search the directories stored in the `PATH` environment variable to find executable commands. Commands that already contain a path are handled directly.
+
+**Assigned to:**
+Vivianna Loredo and Damian Abrego
+
+## Part 5: External Command Execution
+
+**Responsibilities:**
+Create child processes and execute external commands. Foreground commands are waited on by the shell while background commands are allowed to continue running.
+
+**Assigned to:**
+Xavier Rosario and Damian Abrego
+
+## Part 6: I/O Redirection
+
+**Responsibilities:**
+Implement input and output redirection using `<` and `>`, including opening the correct files, redirecting standard input or output, and removing redirection tokens before executing a command.
+
+**Assigned to:**
+Vivianna Loredo and Xavier Rosario
+
+## Part 7: Piping
+
+**Responsibilities:**
+Implement command pipelines using `|`. Commands in the pipeline are separated into stages and connected using pipes so the output of one command becomes the input of the next.
+
+**Assigned to:**
+Xavier Rosario and Damian Abrego
+
+## Part 8: Background Processing
+
+**Responsibilities:**
+Support commands ending in `&`, keep track of background jobs, assign increasing job numbers, report completed jobs, and implement the `jobs` command.
+
+**Assigned to:**
+Xavier Rosario and Damian Abrego
+
+## Part 9: Internal Command Execution
+
+**Responsibilities:**
+Implement shell commands that must be handled internally, including `cd`, `jobs`, and `exit`.
+
+**Assigned to:**
+Vivianna Loredo and Damian Abrego
+
+## Extra Credit
+
+**Responsibilities:**
+Work on the optional extended shell functionality, including longer pipelines, combining pipelines with I/O redirection, and running the shell from inside another copy of the shell.
+
+**Assigned to:**
+Xavier Rosario and Damian Abrego
+
+---
+
+# Features
+
+The completed shell supports:
+
+- Interactive shell prompt
+- External command execution
+- Command arguments
+- PATH searching
+- Direct executable paths
+- Environment variable expansion
+- Tilde expansion
+- `cd`
+- Input redirection using `<`
+- Output redirection using `>`
+- Multi-stage pipelines using `|`
+- Background commands using `&`
+- Background pipelines
+- Background job tracking
+- Increasing job numbers
+- `jobs`
+- Background job completion messages
+- Waiting for active background jobs before exiting
+- Internal commands
+- Last-three-valid-command history
+- Invalid command handling
+- Memory cleanup when the shell exits
+
+---
+
+# File Listing
+
+```text
+COP4610-Project1-Group39/
+├── include/
+│   ├── builtins.h
+│   ├── executor.h
+│   ├── expansion.h
+│   ├── history.h
+│   ├── jobs.h
+│   ├── lexer.h
+│   ├── path_search.h
+│   ├── pipeline.h
+│   ├── prompt.h
+│   └── redirection.h
 │
 ├── src/
-│ ├── main.c
-│ └── shell.c
+│   ├── builtins.c
+│   ├── executor.c
+│   ├── expansion.c
+│   ├── history.c
+│   ├── jobs.c
+│   ├── lexer.c
+│   ├── main.c
+│   ├── path_search.c
+│   ├── pipeline.c
+│   ├── prompt.c
+│   └── redirection.c
 │
-├── include/
-│ └── shell.h
-│
-├── README.md
-└── Makefile
+├── .gitignore
+├── Makefile
+└── README.md
 ```
-## How to Compile & Execute
 
-### Requirements
-- **Compiler**: e.g., `gcc` for C/C++, `rustc` for Rust.
-- **Dependencies**: List any libraries or frameworks necessary (rust only).
+## File Descriptions
 
-### Compilation
-For a C/C++ example:
+- `src/main.c` - Contains the main shell loop and connects the different shell components.
+- `src/lexer.c` - Reads input and separates it into tokens.
+- `src/prompt.c` - Displays the shell prompt.
+- `src/expansion.c` - Handles environment variable and tilde expansion.
+- `src/path_search.c` - Searches PATH for external commands.
+- `src/executor.c` - Handles execution of individual external commands.
+- `src/redirection.c` - Handles input and output redirection.
+- `src/pipeline.c` - Handles pipelines containing multiple commands.
+- `src/jobs.c` - Tracks and reports background jobs.
+- `src/history.c` - Stores and prints the most recent valid commands.
+- `src/builtins.c` - Handles internal shell commands.
+
+---
+
+# How to Compile and Execute
+
+## Requirements
+
+The project is written in C and was developed and tested on the linprog Linux environment.
+
+The provided Makefile is used to compile the project.
+
+## Compilation
+
+From the project directory, run:
+
 ```bash
 make
 ```
-This will build the executable in ...
-### Execution
+
+This creates the shell executable at:
+
+```text
+bin/shell
+```
+
+## Execution
+
+Run the shell with:
+
+```bash
+./bin/shell
+```
+
+or:
+
 ```bash
 make run
 ```
-This will run the program ...
 
-## Development Log
-Each member records their contributions here.
+## Cleaning Build Files
 
-### [Member 1]
+To remove the generated object files and executable, run:
 
-| Date       | Work Completed / Notes |
-|------------|------------------------|
-| YYYY-MM-DD | [Description of task]  |
-| YYYY-MM-DD | [Description of task]  |
-| YYYY-MM-DD | [Description of task]  |
+```bash
+make clean
+```
 
-### [Member 2]
+The files inside `obj/` and the generated `bin/shell` executable are build files and are not tracked in the Git repository.
 
-| Date       | Work Completed / Notes |
-|------------|------------------------|
-| YYYY-MM-DD | [Description of task]  |
-| YYYY-MM-DD | [Description of task]  |
-| YYYY-MM-DD | [Description of task]  |
+---
 
+# Development Log
 
-### [Member 3]
+## Vivianna Loredo
 
-| Date       | Work Completed / Notes |
-|------------|------------------------|
-| YYYY-MM-DD | [Description of task]  |
-| YYYY-MM-DD | [Description of task]  |
-| YYYY-MM-DD | [Description of task]  |
+| Date | Work Completed / Notes |
+|---|---|
+| 2026-09-09 | Met virtually with the group to review the project requirements and divide the work. Took responsibility for parts involving the prompt, environment variables, tilde expansion, PATH searching, I/O redirection, and internal commands. Also discussed how the different shell components would eventually be combined. |
+| 2026-09-18 | Continued reviewing and working on the prompt and expansion-related portions of the shell. Checked environment variable and tilde expansion behavior and worked with PATH searching so external commands could be located correctly. Met with the group to give progress updates and discuss how the separate components would interact. |
+| 2026-09-25 | Participated in the final virtual progress check with the group. Reviewed the current state of I/O redirection and internal command behavior and discussed the remaining integration and testing that needed to be completed. |
+| 2026-09-28 | Helped complete the final integration and testing of the full shell. Tested the prompt, external commands, invalid commands, environment variables, tilde expansion, `cd`, PATH searching, redirection, pipelines, background processing, jobs, history, exit behavior, and extra-credit functionality. Also ran the final Valgrind tests and repository checks. |
 
+## Damian Abrego
 
-## Meetings
-Document in-person meetings, their purpose, and what was discussed.
+| Date | Work Completed / Notes |
+|---|---|
+| 2026-09-09 | Met virtually with the group to review the specifications and divide the project responsibilities. Took responsibility for environment variables, PATH searching, external command execution, piping, background processing, internal commands, and extra-credit work. Discussed how process-management functionality would connect with the other parts of the shell. |
+| 2026-09-18 | Worked on and reviewed command execution and process-related functionality. Focused on how external commands, pipelines, background processes, and PATH searching would work together. Met with the group to give updates and discuss remaining integration issues. |
+| 2026-09-25 | Participated in the final virtual project update. Reviewed the current state of execution, piping, and background processing and discussed the remaining testing and integration work needed before finalizing the project. |
 
-| Date       | Attendees            | Topics Discussed | Outcomes / Decisions |
-|------------|----------------------|------------------|-----------------------|
-| YYYY-MM-DD | [Names]              | [Agenda items]   | [Actions/Next steps]  |
-| YYYY-MM-DD | [Names]              | [Agenda items]   | [Actions/Next steps]  |
+## Xavier Rosario
 
+| Date | Work Completed / Notes |
+|---|---|
+| 2026-09-09 | Met virtually with the group to review the project requirements and divide the work. Took responsibility for the prompt, tilde expansion, external command execution, I/O redirection, piping, background processing, and extra-credit work. Discussed how command execution would connect to the rest of the shell. |
+| 2026-09-18 | Continued working on and reviewing command execution, piping, redirection, and background-processing functionality. Met with the group to give progress updates and discuss how these sections would integrate with expansion and PATH searching. |
+| 2026-09-25 | Participated in the final virtual status check and reviewed the process-related sections of the project. Discussed remaining integration work, testing, and final cleanup before the full project was completed. |
 
+---
 
-## Bugs
-- **Bug 1**: This is bug 1.
-- **Bug 2**: This is bug 2.
-- **Bug 3**: This is bug 3.
+# Meetings
 
-## Extra Credit
-- **Extra Credit 1**: [Extra Credit Option]
-- **Extra Credit 2**: [Extra Credit Option]
-- **Extra Credit 3**: [Extra Credit Option]
+| Date | Attendees | Format | Discussion / Outcome |
+|---|---|---|---|
+| 2026-09-09 | Damian Abrego, Vivianna Loredo, Xavier Rosario | Virtual | Reviewed the Project 1 requirements and went through the different shell features that needed to be implemented. Divided the project responsibilities between the three members and discussed which sections depended on one another. Decided to divide closely related features between two people when useful so that the sections could be checked together during integration. |
+| 2026-09-18 | Damian Abrego, Vivianna Loredo, Xavier Rosario | Virtual | Each member gave an update on their assigned portions of the project. Discussed completed and unfinished features, how the separate source files would interact, and issues involving PATH search, execution, redirection, piping, and background processing. Identified the remaining work needed before final integration. |
+| 2026-09-25 | Damian Abrego, Vivianna Loredo, Xavier Rosario | Virtual | Met for a final check of where the project was at before completing integration. Reviewed which features were finished, discussed remaining testing and cleanup, and checked what still needed to be done with the README and repository. Agreed to finish the final build, functionality tests, memory checks, and documentation before considering the project complete. |
 
-## Considerations
-[Description]
+---
+
+# Testing
+
+The completed shell was tested using both individual commands and combinations of shell features.
+
+Testing included:
+
+- Running external commands
+- Commands with arguments
+- Invalid commands
+- Environment variable expansion using `$USER`
+- Environment variable expansion using `$HOME`
+- Expansion of nonexistent environment variables
+- Tilde expansion
+- PATH searching
+- Direct executable paths
+- `cd` with a directory
+- `cd` with no argument
+- Invalid `cd` paths
+- `cd` with too many arguments
+- Input redirection
+- Output redirection
+- Output file permissions
+- Input and output redirection together
+- Two-stage pipelines
+- Three-stage pipelines
+- Longer pipelines
+- Background commands
+- Background pipelines
+- `jobs`
+- Finished background job cleanup
+- Increasing job numbers
+- Reuse of completed background job slots
+- Maximum number of active background jobs
+- Waiting for active jobs before exiting
+- Valid-command history
+- Excluding invalid commands from history
+- Nested shell execution
+- Memory cleanup
+
+Example pipeline tests included:
+
+```bash
+echo hello | tr a-z A-Z
+```
+
+and:
+
+```bash
+printf hello | tr a-z A-Z | wc -c
+```
+
+The project was also checked using:
+
+```bash
+git diff --check
+```
+
+with no whitespace errors reported.
+
+---
+
+# Memory Testing
+
+The integrated shell was tested using Valgrind.
+
+The final regression test reported:
+
+```text
+HEAP SUMMARY:
+    in use at exit: 0 bytes in 0 blocks
+
+All heap blocks were freed -- no leaks are possible
+
+ERROR SUMMARY: 0 errors from 0 contexts
+```
+
+This confirmed that the final tested version exited without reported memory leaks or memory errors.
+
+---
+
+# Extra Credit
+
+All three extra-credit features were tested successfully.
+
+## Multiple / Longer Pipelines
+
+The shell successfully handled a longer pipeline containing several commands:
+
+```bash
+printf hello | cat | cat | cat | cat | cat | wc -c
+```
+
+Output:
+
+```text
+5
+```
+
+## Piping With I/O Redirection
+
+Piping and output redirection were successfully used in the same command:
+
+```bash
+printf hello | tr a-z A-Z > /tmp/extra_credit.txt
+```
+
+The file was then checked with:
+
+```bash
+cat /tmp/extra_credit.txt
+```
+
+Output:
+
+```text
+HELLO
+```
+
+## Shell-ception
+
+The shell was also tested by starting another copy of the shell from inside the running custom shell:
+
+```bash
+./bin/shell
+```
+
+A command was successfully executed inside the nested shell:
+
+```bash
+echo nested_shell_works
+```
+
+Output:
+
+```text
+nested_shell_works
+```
+
+Exiting the nested shell returned to the original custom shell, and exiting the original shell returned to the normal linprog terminal.
+
+---
+
+# Bugs / Known Issues
+
+No known bugs were identified during the final round of testing.
+
+---
+
+# Considerations
+
+The shell was developed and tested on the linprog environment provided for the course.
+
+The project is separated into multiple source and header files so that the different parts of the shell can be developed, tested, and maintained separately.
+
+Before the final version was completed, the combined project was rebuilt and tested again to make sure the integrated features still worked correctly. The final tested version also completed its Valgrind run with no reported memory leaks or errors.
