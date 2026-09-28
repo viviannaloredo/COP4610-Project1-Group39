@@ -105,7 +105,10 @@ pid_t *execute_pipeline(tokenlist **stages, char **exec_paths, size_t num_stages
                 _exit(1);
             }
 
+            /* Give execv the resolved path as argv[0] for every pipeline stage. */
+            stages[i]->items[0] = exec_paths[i];
             execv(exec_paths[i], stages[i]->items);
+
             fprintf(stderr, "%s: could not execute\n", stages[i]->items[0]);
             _exit(127);
         }

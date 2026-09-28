@@ -18,11 +18,14 @@ pid_t execute_command(tokenlist *tokens, const char *exec_path)
             _exit(1);
         }
 
+        /* execv expects argv[0] to contain the resolved executable path. */
+        tokens->items[0] = (char *)exec_path;
         execv(exec_path, tokens->items);
 
         /* execv() only returns on failure. */
         fprintf(stderr, "%s: could not execute\n", tokens->items[0]);
         _exit(127);
     }
+
     return pid;
 }
