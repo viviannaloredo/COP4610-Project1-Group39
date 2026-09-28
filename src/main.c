@@ -144,6 +144,13 @@ int main(void)
         expand_tilde(tokens);
  
         int valid;
+        if (strcmp(tokens->items[0], "exit") == 0)
+        {
+            free(cmdline);
+            free_tokens(tokens);
+            builtin_exit();
+        }
+
         if (is_builtin(tokens->items[0]))
             valid = run_internal(tokens);
         else if (has_pipe(tokens))
