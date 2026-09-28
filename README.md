@@ -15,7 +15,7 @@ The project was divided between the three group members so that each person work
 ## Group Members
 
 - Damian Abrego
-- Vivianna Loredo
+- Vivianna Loredo - vl22j@fsu.edu
 - Xavier Rosario
 
 ---
