@@ -15,7 +15,7 @@ The project was divided between the three group members so that each person work
 ## Group Members
 
 - Damian Abrego
-- Vivianna Loredo - vl22j@fsu.edu
+- Vivianna Loredo
 - Xavier Rosario
 
 ---
@@ -231,32 +231,37 @@ The files inside `obj/` and the generated `bin/shell` executable are build files
 
 ---
 
-# Development Log
+## Development Log
 
-## Vivianna Loredo
-
-| Date | Work Completed / Notes |
-|---|---|
-| 2026-09-09 | Met virtually with the group to review the project requirements and divide the work. Took responsibility for parts involving the prompt, environment variables, tilde expansion, PATH searching, I/O redirection, and internal commands. Also discussed how the different shell components would eventually be combined. |
-| 2026-09-18 | Continued reviewing and working on the prompt and expansion-related portions of the shell. Checked environment variable and tilde expansion behavior and worked with PATH searching so external commands could be located correctly. Met with the group to give progress updates and discuss how the separate components would interact. |
-| 2026-09-25 | Participated in the final virtual progress check with the group. Reviewed the current state of I/O redirection and internal command behavior and discussed the remaining integration and testing that needed to be completed. |
-| 2026-09-28 | Helped complete the final integration and testing of the full shell. Tested the prompt, external commands, invalid commands, environment variables, tilde expansion, `cd`, PATH searching, redirection, pipelines, background processing, jobs, history, exit behavior, and extra-credit functionality. Also ran the final Valgrind tests and repository checks. |
-
-## Damian Abrego
+### Vivianna Loredo
 
 | Date | Work Completed / Notes |
 |---|---|
-| 2026-09-09 | Met virtually with the group to review the specifications and divide the project responsibilities. Took responsibility for environment variables, PATH searching, external command execution, piping, background processing, internal commands, and extra-credit work. Discussed how process-management functionality would connect with the other parts of the shell. |
-| 2026-09-18 | Worked on and reviewed command execution and process-related functionality. Focused on how external commands, pipelines, background processes, and PATH searching would work together. Met with the group to give updates and discuss remaining integration issues. |
-| 2026-09-25 | Participated in the final virtual project update. Reviewed the current state of execution, piping, and background processing and discussed the remaining testing and integration work needed before finalizing the project. |
+| 2026-09-09 | Met virtually with the group to go through the project requirements and divide the work. My assigned sections included the prompt, environment variables, tilde expansion, PATH searching, I/O redirection, and internal commands. |
+| 2026-09-12 | Started working through the prompt and expansion features. Tested the prompt formatting and worked on replacing environment-variable and tilde tokens with their correct values. |
+| 2026-09-18 | Focused on PATH searching and I/O redirection and checked how they behaved with the other completed shell features. During our group update, we also discussed what still needed to be connected and tested. |
+| 2026-09-24 | Reviewed the internal commands, especially `cd`, `jobs`, and `exit`, and checked their behavior alongside history and background processing. |
+| 2026-09-28 | Helped with the final integration and regression testing of the complete shell. Ran command, pipeline, redirection, background-job, history, extra-credit, and Valgrind tests before the final repository review. |
 
-## Xavier Rosario
+### Damian Abrego
 
 | Date | Work Completed / Notes |
 |---|---|
-| 2026-09-09 | Met virtually with the group to review the project requirements and divide the work. Took responsibility for the prompt, tilde expansion, external command execution, I/O redirection, piping, background processing, and extra-credit work. Discussed how command execution would connect to the rest of the shell. |
-| 2026-09-18 | Continued working on and reviewing command execution, piping, redirection, and background-processing functionality. Met with the group to give progress updates and discuss how these sections would integrate with expansion and PATH searching. |
-| 2026-09-25 | Participated in the final virtual status check and reviewed the process-related sections of the project. Discussed remaining integration work, testing, and final cleanup before the full project was completed. |
+| 2026-09-09 | Joined the initial virtual planning meeting and took on work involving environment variables, PATH search, external command execution, piping, background processing, internal commands, and extra credit. |
+| 2026-09-14 | Worked mainly on external command execution and PATH-related behavior. Checked that commands could be located and started correctly with their arguments. |
+| 2026-09-19 | Continued with process-management portions of the project, including pipelines and background execution. Reviewed how child processes and command PIDs needed to be tracked. |
+| 2026-09-23 | Worked on the `jobs`/background-process behavior and checked that completed processes were reported correctly while job numbers continued increasing. |
+| 2026-09-25 | Reviewed the process-related portions during the final group status meeting and helped identify the remaining integration and extra-credit checks that needed to be completed. |
+
+### Xavier Rosario
+
+| Date | Work Completed / Notes |
+|---|---|
+| 2026-09-09 | Took part in the project planning meeting and was assigned work on the prompt, tilde expansion, external command execution, I/O redirection, piping, background processing, and extra-credit features. |
+| 2026-09-13 | Worked on the prompt and tilde-expansion portions and checked that the shell displayed the expected information while expanding `~` paths correctly. |
+| 2026-09-17 | Shifted to command execution and redirection. Tested external commands with arguments and reviewed how input/output files were connected to child processes. |
+| 2026-09-21 | Worked through piping and background-command behavior, including combinations involving multiple commands and process tracking. |
+| 2026-09-25 | During the final virtual project check, reviewed the remaining pipeline/background functionality and the extra-credit features before the full-shell integration tests were completed. |
 
 ---
 
