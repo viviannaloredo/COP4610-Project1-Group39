@@ -22,9 +22,12 @@ char *get_input(void) {
 		if (newln != NULL)
 			break;
 	}
-	buffer = (char *)realloc(buffer, bufsize + 1);
-	buffer[bufsize] = 0;
-	return buffer;
+    if (feof(stdin) && bufsize == 0)
+        return NULL;
+
+    buffer = (char *)realloc(buffer, bufsize + 1);
+    buffer[bufsize] = 0;
+    return buffer;
 }
 
 tokenlist *new_tokenlist(void) {
